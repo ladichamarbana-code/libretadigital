@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="La Caja de Tere">
+<title>La Caja de Tere</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tierra: #8B7355;
+    --tierra-claro: #A89279;
+    --crema: #F5F0E8;
+    --crema-oscuro: #EDE6D8;
+    --verde: #6B8E5A;
+    --verde-hover: #5A7A4A;
+    --texto: #3D3428;
+    --texto-suave: #6B5E4F;
+    --blanco: #FEFDFB;
+    --borde: #D4C9B8;
+    --whatsapp: #25D366;
+    --whatsapp-hover: #1FAD54;
+    --rojo: #C4533A;
+    --rojo-suave: #F5E6E2;
+    --azul: #4A7FB5;
+    --azul-suave: #E8F0F8;
+    --sombra: rgba(59, 46, 30, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    min-height: 100vh;
+    padding-bottom: 110px;
+  }
+
+  /* Header */
+  .header {
+    background: var(--blanco);
+    padding: 18px 20px;
+    text-align: center;
+    box-shadow: 0 2px 12px var(--sombra);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-left {
+    text-align: left;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: 1.3rem;
+    color: var(--tierra);
+  }
+
+  .header-sub {
+    font-size: 0.78rem;
+    color: var(--texto-suave);
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .header-btn {
+    background: none;
+    border: 1.5px solid var(--borde);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .header-btn:hover {
+    border-color: var(--tierra);
+    color: var(--tierra);
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 12px 16px 0;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--texto-suave);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    color: var(--tierra);
+    border-bottom-color: var(--tierra);
+    font-weight: 600;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* Reparto bar */
+  .reparto-bar {
+    background: var(--blanco);
+    margin: 12px 16px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px var(--sombra);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .reparto-icon { font-size: 1.4rem; }
+
+  .reparto-info { flex: 1; }
+
+  .reparto-label {
+    font-size: 0.72rem;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+
+  .reparto-date {
+    font-size: 0.95rem;
+    color: var(--texto);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .reparto-edit-btn {
+    background: none;
+    border: 1.5px solid var(--borde);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .reparto-edit-btn:hover {
+    border-color: var(--tierra);
+    color: var(--tierra);
+  }
+
+  /* Stats */
+  .stats {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 12px;
+  }
+
+  .stat-card {
+    flex: 1;
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    box-shadow: 0 1px 8px var(--sombra);
+  }
+
+  .stat-number {
+    font-family: 'Lora', serif;
+    font-size: 1.4rem;
+    color: var(--tierra);
+    font-weight: 600;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    color: var(--texto-suave);
+    margin-top: 2px;
+  }
+
+  /* Search */
+  .search-bar {
+    padding: 0 16px;
+    margin-bottom: 10px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1.5px solid var(--borde);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--texto);
+    background: var(--blanco) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A89279' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") 13px center no-repeat;
+    outline: none;
+  }
+
+  .search-input:focus { border-color: var(--tierra); }
+
+  /* Section title */
+  .section-title {
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+
+  /* Client list */
+  .client-list { padding: 0 16px; }
+
+  .client-card {
+    background: var(--blanco);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 8px var(--sombra);
+    transition: transform 0.15s ease;
+  }
+
+  .client-card:active { transform: scale(0.98); }
+
+  .client-card.confirmed {
+    border-left: 4px solid var(--verde);
+  }
+
+  .client-card.sent {
+    opacity: 0.65;
+    border-left: 4px solid var(--tierra-claro);
+  }
+
+  .client-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .client-name {
+    font-family: 'Lora', serif;
+    font-size: 1.02rem;
+    color: var(--tierra);
+    font-weight: 600;
+  }
+
+  .client-phone {
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+    margin-top: 1px;
+  }
+
+  .client-status {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .status-pending {
+    background: var(--crema-oscuro);
+    color: var(--texto-suave);
+  }
+
+  .status-sent {
+    background: #FFF3E0;
+    color: #E65100;
+  }
+
+  .status-confirmed {
+    background: #E8F5E9;
+    color: #2E7D32;
+  }
+
+  .client-order {
+    font-size: 0.87rem;
+    color: var(--texto);
+    line-height: 1.45;
+    padding: 10px 12px;
+    background: var(--crema);
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .client-order-label {
+    font-size: 0.7rem;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .client-details {
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .client-details span {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .client-note {
+    font-size: 0.8rem;
+    color: var(--azul);
+    background: var(--azul-suave);
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .client-note::before {
+    content: '📝 ';
+  }
+
+  .client-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn-wa {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px;
+    border: none;
+    border-radius: 10px;
+    background: var(--whatsapp);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-wa:hover { background: var(--whatsapp-hover); }
+  .btn-wa svg { width: 16px; height: 16px; fill: white; }
+
+  .btn-confirm {
+    padding: 9px 12px;
+    border: 1.5px solid var(--verde);
+    border-radius: 10px;
+    background: var(--blanco);
+    color: var(--verde);
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+  }
+
+  .btn-confirm:hover { background: #E8F5E9; }
+
+  .btn-confirm.is-confirmed {
+    background: var(--verde);
+    color: white;
+    border-color: var(--verde);
+  }
+
+  .btn-small {
+    padding: 9px 10px;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    background: var(--blanco);
+    color: var(--texto-suave);
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-small:hover { border-color: var(--tierra); }
+
+  .btn-delete {
+    padding: 9px 10px;
+    border: 1.5px solid var(--rojo-suave);
+    border-radius: 10px;
+    background: var(--blanco);
+    color: var(--rojo);
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-delete:hover { background: var(--rojo-suave); }
+
+  /* Production summary */
+  .production-summary {
+    padding: 0 16px;
+  }
+
+  .prod-card {
+    background: var(--blanco);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 12px var(--sombra);
+    margin-bottom: 12px;
+  }
+
+  .prod-title {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--tierra);
+    margin-bottom: 4px;
+  }
+
+  .prod-subtitle {
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+    margin-bottom: 16px;
+  }
+
+  .prod-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--crema-oscuro);
+    font-size: 0.9rem;
+  }
+
+  .prod-item:last-child { border-bottom: none; }
+
+  .prod-item-name { color: var(--texto); }
+
+  .prod-item-qty {
+    font-weight: 600;
+    color: var(--tierra);
+    font-size: 1rem;
+  }
+
+  .prod-empty {
+    text-align: center;
+    padding: 30px;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+  }
+
+  .confirmed-list {
+    margin-top: 16px;
+  }
+
+  .confirmed-client {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--crema);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+  }
+
+  .confirmed-client-name {
+    font-weight: 500;
+    color: var(--texto);
+  }
+
+  .confirmed-client-order {
+    color: var(--texto-suave);
+    text-align: right;
+    max-width: 55%;
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: var(--blanco);
+    box-shadow: 0 -2px 16px var(--sombra);
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .btn-add {
+    padding: 14px 18px;
+    border: none;
+    border-radius: 12px;
+    background: var(--tierra);
+    color: var(--blanco);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-add:hover { background: var(--tierra-claro); }
+
+  .btn-send-all {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: var(--verde);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-send-all:hover { background: var(--verde-hover); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .modal-overlay.visible { display: flex; }
+
+  .modal {
+    background: var(--blanco);
+    border-radius: 20px 20px 0 0;
+    padding: 24px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .modal-title {
+    font-family: 'Lora', serif;
+    font-size: 1.15rem;
+    color: var(--tierra);
+    margin-bottom: 16px;
+  }
+
+  .modal label {
+    display: block;
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--texto);
+    margin-bottom: 5px;
+    margin-top: 12px;
+  }
+
+  .modal label:first-of-type { margin-top: 0; }
+
+  .modal input, .modal textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--texto);
+    background: var(--blanco);
+    outline: none;
+  }
+
+  .modal input:focus, .modal textarea:focus { border-color: var(--tierra); }
+  .modal textarea { min-height: 70px; resize: vertical; line-height: 1.5; }
+
+  .modal-hint {
+    font-size: 0.78rem;
+    color: var(--tierra-claro);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .modal-cancel {
+    padding: 12px 18px;
+    border: 1.5px solid var(--borde);
+    border-radius: 12px;
+    background: var(--blanco);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--texto-suave);
+    cursor: pointer;
+  }
+
+  .modal-save {
+    flex: 1;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 12px;
+    background: var(--tierra);
+    color: var(--blanco);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 36px 20px;
+    color: var(--texto-suave);
+  }
+
+  .empty-state-icon { font-size: 2.8rem; margin-bottom: 10px; }
+  .empty-state p { font-size: 0.9rem; line-height: 1.5; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--texto);
+    color: var(--blanco);
+    padding: 11px 18px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    z-index: 300;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+    max-width: 90%;
+  }
+
+  .toast.visible { transform: translateX(-50%) translateY(0); }
+
+  /* Hidden file input */
+  #import-file { display: none; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <h1>🧀 La Caja de Tere</h1>
+    <div class="header-sub">Tu libreta de pedidos fijos</div>
+  </div>
+  <div class="header-actions">
+    <button class="header-btn" onclick="exportData()">💾</button>
+    <button class="header-btn" onclick="document.getElementById('import-file').click()">📂</button>
+  </div>
+</div>
+<input type="file" id="import-file" accept=".json" onchange="importData(event)">
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('clients')">📋 Clientes</div>
+  <div class="tab" onclick="switchTab('production')">📊 Producción</div>
+</div>
+
+<!-- TAB: Clients -->
+<div class="tab-content active" id="tab-clients">
+  <div class="reparto-bar">
+    <span class="reparto-icon">📅</span>
+    <div class="reparto-info">
+      <div class="reparto-label">Próximo reparto</div>
+      <div class="reparto-date" id="reparto-date">Jueves 15 de mayo</div>
+    </div>
+    <button class="reparto-edit-btn" onclick="editReparto()">Cambiar</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-number" id="stat-total">0</div>
+      <div class="stat-label">Clientes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="stat-pending">0</div>
+      <div class="stat-label">Sin avisar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="stat-sent">0</div>
+      <div class="stat-label">Avisados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="stat-confirmed">0</div>
+      <div class="stat-label">Confirmados ✓</div>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" class="search-input" placeholder="Buscar cliente..." oninput="filterClients(this.value)">
+  </div>
+
+  <div class="client-list" id="client-list"></div>
+</div>
+
+<!-- TAB: Production -->
+<div class="tab-content" id="tab-production">
+  <div class="production-summary" id="production-summary"></div>
+</div>
+
+<!-- Bottom bar -->
+<div class="bottom-bar">
+  <button class="btn-add" onclick="openModal()">+</button>
+  <button class="btn-send-all" onclick="sendNextPending()">
+    📲 Avisar al siguiente
+  </button>
+</div>
+
+<!-- Modal: Add/Edit client -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Nuevo cliente</div>
+    
+    <label for="m-nombre">Nombre</label>
+    <input type="text" id="m-nombre" placeholder="Ej: Sara García">
+
+    <label for="m-telefono">Teléfono</label>
+    <input type="tel" id="m-telefono" placeholder="Ej: 34600123456">
+    <div class="modal-hint">Con prefijo 34, sin espacios</div>
+
+    <label for="m-pedido">Su pedido de siempre</label>
+    <textarea id="m-pedido" placeholder="Ej: 2 yogures de litro, 1 rulito de cabra"></textarea>
+
+    <label for="m-direccion">Dirección</label>
+    <input type="text" id="m-direccion" placeholder="Ej: C/ Don Ramiro 22, 3ºB">
+
+    <label for="m-horario">Horario preferido</label>
+    <input type="text" id="m-horario" placeholder="Ej: Antes de las 8:30">
+
+    <label for="m-notas">Notas personales</label>
+    <textarea id="m-notas" placeholder="Ej: Su hijo Gonzalo le hizo un diploma. Paga en efectivo, llevar cambio." style="min-height:55px;"></textarea>
+    <div class="modal-hint">Solo para ti, no se incluyen en el mensaje</div>
+
+    <input type="hidden" id="m-edit-id" value="">
+
+    <div class="modal-buttons">
+      <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-save" onclick="saveClient()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Reparto date -->
+<div class="modal-overlay" id="reparto-modal" onclick="if(event.target===this)closeRepartoModal()">
+  <div class="modal">
+    <div class="modal-title">Fecha del próximo reparto</div>
+    <label for="r-fecha">Escríbela como la dirías a tus clientes</label>
+    <input type="text" id="r-fecha" placeholder="Ej: Jueves 15 de mayo">
+    <div class="modal-hint">Al cambiar la fecha se reinician los contadores</div>
+    <div class="modal-buttons">
+      <button class="modal-cancel" onclick="closeRepartoModal()">Cancelar</button>
+      <button class="modal-save" onclick="saveReparto()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ============================================
+  // DATA
+  // ============================================
+  let clients = [];
+  let repartoDate = 'Jueves 15 de mayo';
+  let clientStatus = {}; // id -> 'pending' | 'sent' | 'confirmed'
+
+  function loadData() {
+    try {
+      const s1 = localStorage.getItem('caja-v2-clients');
+      if (s1) clients = JSON.parse(s1);
+      const s2 = localStorage.getItem('caja-v2-reparto');
+      if (s2) repartoDate = s2;
+      const s3 = localStorage.getItem('caja-v2-status');
+      if (s3) clientStatus = JSON.parse(s3);
+    } catch(e) { clients = []; }
+  }
+
+  function saveData() {
+    localStorage.setItem('caja-v2-clients', JSON.stringify(clients));
+    localStorage.setItem('caja-v2-reparto', repartoDate);
+    localStorage.setItem('caja-v2-status', JSON.stringify(clientStatus));
+  }
+
+  // ============================================
+  // TABS
+  // ============================================
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    
+    if (tab === 'clients') {
+      document.querySelectorAll('.tab')[0].classList.add('active');
+      document.getElementById('tab-clients').classList.add('active');
+    } else {
+      document.querySelectorAll('.tab')[1].classList.add('active');
+      document.getElementById('tab-production').classList.add('active');
+      renderProduction();
+    }
+  }
+
+  // ============================================
+  // RENDER CLIENTS
+  // ============================================
+  function render(filter = '') {
+    const list = document.getElementById('client-list');
+    const filtered = clients.filter(c =>
+      c.nombre.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    const confirmed = clients.filter(c => clientStatus[c.id] === 'confirmed').length;
+    const sent = clients.filter(c => clientStatus[c.id] === 'sent').length;
+    const pending = clients.length - confirmed - sent;
+
+    document.getElementById('stat-total').textContent = clients.length;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-sent').textContent = sent;
+    document.getElementById('stat-confirmed').textContent = confirmed;
+    document.getElementById('reparto-date').textContent = repartoDate;
+
+    if (filtered.length === 0) {
+      list.innerHTML = `<div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <p>${clients.length === 0 ? 'Aún no tienes clientes.<br>Pulsa + para añadir el primero.' : 'No se encontró ningún cliente.'}</p>
+      </div>`;
+      return;
+    }
+
+    const order = { pending: 0, sent: 1, confirmed: 2 };
+    const sorted = [...filtered].sort((a, b) => {
+      const sa = order[clientStatus[a.id] || 'pending'] || 0;
+      const sb = order[clientStatus[b.id] || 'pending'] || 0;
+      if (sa !== sb) return sa - sb;
+      return a.nombre.localeCompare(b.nombre);
+    });
+
+    let html = '';
+    let lastStatus = null;
+
+    sorted.forEach(c => {
+      const status = clientStatus[c.id] || 'pending';
+      
+      if (status !== lastStatus) {
+        const labels = { pending: '📋 Sin avisar', sent: '📨 Avisados', confirmed: '✅ Confirmados' };
+        html += `<div class="section-title">${labels[status]}</div>`;
+        lastStatus = status;
+      }
+
+      const statusLabels = { pending: ['Sin avisar', 'status-pending'], sent: ['Avisado', 'status-sent'], confirmed: ['Confirmado ✓', 'status-confirmed'] };
+      const [statusText, statusClass] = statusLabels[status];
+
+      html += `
+        <div class="client-card ${status === 'confirmed' ? 'confirmed' : status === 'sent' ? 'sent' : ''}">
+          <div class="client-top">
+            <div>
+              <div class="client-name">${c.nombre}</div>
+              <div class="client-phone">${formatPhone(c.telefono)}</div>
+            </div>
+            <span class="client-status ${statusClass}">${statusText}</span>
+          </div>
+          <div class="client-order">
+            <div class="client-order-label">Su pedido de siempre</div>
+            ${c.pedido}
+          </div>
+          ${c.direccion || c.horario ? `<div class="client-details">
+            ${c.direccion ? `<span>📍 ${c.direccion}</span>` : ''}
+            ${c.horario ? `<span>🕐 ${c.horario}</span>` : ''}
+          </div>` : ''}
+          ${c.notas ? `<div class="client-note">${c.notas}</div>` : ''}
+          <div class="client-actions">
+            <button class="btn-wa" onclick="sendWhatsApp('${c.id}')">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              ${status === 'pending' ? 'Avisar' : 'Reenviar'}
+            </button>
+            <button class="btn-confirm ${status === 'confirmed' ? 'is-confirmed' : ''}" onclick="toggleConfirm('${c.id}')">
+              ${status === 'confirmed' ? '✓' : '✓?'}
+            </button>
+            <button class="btn-small" onclick="editClient('${c.id}')">✏️</button>
+            <button class="btn-delete" onclick="deleteClient('${c.id}')">🗑</button>
+          </div>
+        </div>`;
+    });
+
+    list.innerHTML = html;
+  }
+
+  // ============================================
+  // RENDER PRODUCTION
+  // ============================================
+  function renderProduction() {
+    const container = document.getElementById('production-summary');
+    const confirmedClients = clients.filter(c => clientStatus[c.id] === 'confirmed');
+
+    if (confirmedClients.length === 0) {
+      container.innerHTML = `<div class="prod-card">
+        <div class="prod-empty">
+          <div style="font-size:2rem;margin-bottom:8px;">📊</div>
+          Aún no hay pedidos confirmados.<br>Cuando marques clientes como confirmados, aquí verás el resumen de producción.
+        </div>
+      </div>`;
+      return;
+    }
+
+    // Parse products from all confirmed orders
+    const allProducts = {};
+    confirmedClients.forEach(c => {
+      const items = c.pedido.split(/,|y /).map(s => s.trim()).filter(s => s);
+      items.forEach(item => {
+        const match = item.match(/^(\d+)\s+(.+)/);
+        if (match) {
+          const qty = parseInt(match[1]);
+          const name = match[2].trim().toLowerCase();
+          allProducts[name] = (allProducts[name] || 0) + qty;
+        } else {
+          const name = item.trim().toLowerCase();
+          allProducts[name] = (allProducts[name] || 0) + 1;
+        }
+      });
+    });
+
+    let prodHtml = `
+      <div class="prod-card">
+        <div class="prod-title">Resumen de producción</div>
+        <div class="prod-subtitle">${repartoDate} — ${confirmedClients.length} pedido${confirmedClients.length > 1 ? 's' : ''} confirmado${confirmedClients.length > 1 ? 's' : ''}</div>`;
+
+    const sortedProducts = Object.entries(allProducts).sort((a, b) => b[1] - a[1]);
+    sortedProducts.forEach(([name, qty]) => {
+      prodHtml += `<div class="prod-item">
+        <span class="prod-item-name">${name.charAt(0).toUpperCase() + name.slice(1)}</span>
+        <span class="prod-item-qty">×${qty}</span>
+      </div>`;
+    });
+
+    prodHtml += `</div>`;
+
+    // List of confirmed clients
+    prodHtml += `<div class="prod-card">
+      <div class="prod-title">Pedidos confirmados</div>
+      <div class="prod-subtitle">Detalle por cliente</div>
+      <div class="confirmed-list">`;
+
+    confirmedClients.forEach(c => {
+      prodHtml += `<div class="confirmed-client">
+        <span class="confirmed-client-name">${c.nombre}</span>
+        <span class="confirmed-client-order">${c.pedido}</span>
+      </div>`;
+    });
+
+    prodHtml += `</div></div>`;
+    container.innerHTML = prodHtml;
+  }
+
+  // ============================================
+  // ACTIONS
+  // ============================================
+  function sendWhatsApp(id) {
+    const c = clients.find(x => x.id === id);
+    if (!c) return;
+
+    const firstName = c.nombre.split(' ')[0];
+    let msg = `¡Hola ${firstName}! El reparto es el ${repartoDate}. ¿Te preparo lo de siempre?\n\n`;
+    msg += `Tu caja: ${c.pedido}\n`;
+    if (c.direccion) msg += `Te lo llevo a: ${c.direccion}\n`;
+    if (c.horario) msg += `Horario: ${c.horario}\n`;
+    msg += `\nDime sí o si quieres cambiar algo 😊`;
+
+    window.open(`https://wa.me/${c.telefono}?text=${encodeURIComponent(msg)}`, '_blank');
+
+    if (!clientStatus[c.id] || clientStatus[c.id] === 'pending') {
+      clientStatus[c.id] = 'sent';
+    }
+    saveData();
+    render(document.querySelector('.search-input').value);
+    showToast(`Mensaje preparado para ${firstName} ✓`);
+  }
+
+  function sendNextPending() {
+    const pending = clients.find(c => !clientStatus[c.id] || clientStatus[c.id] === 'pending');
+    if (pending) {
+      sendWhatsApp(pending.id);
+    } else {
+      showToast('¡Ya has avisado a todos! 🎉');
+    }
+  }
+
+  function toggleConfirm(id) {
+    if (clientStatus[id] === 'confirmed') {
+      clientStatus[id] = 'sent';
+    } else {
+      clientStatus[id] = 'confirmed';
+    }
+    saveData();
+    render(document.querySelector('.search-input').value);
+  }
+
+  // ============================================
+  // MODAL
+  // ============================================
+  function openModal(editId = null) {
+    document.getElementById('modal-title').textContent = editId ? 'Editar cliente' : 'Nuevo cliente';
+    document.getElementById('m-edit-id').value = editId || '';
+
+    if (editId) {
+      const c = clients.find(x => x.id === editId);
+      document.getElementById('m-nombre').value = c.nombre;
+      document.getElementById('m-telefono').value = c.telefono;
+      document.getElementById('m-pedido').value = c.pedido;
+      document.getElementById('m-direccion').value = c.direccion || '';
+      document.getElementById('m-horario').value = c.horario || '';
+      document.getElementById('m-notas').value = c.notas || '';
+    } else {
+      ['m-nombre','m-pedido','m-direccion','m-horario','m-notas'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('m-telefono').value = '34';
+    }
+
+    document.getElementById('modal-overlay').classList.add('visible');
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('visible');
+  }
+
+  function saveClient() {
+    const nombre = document.getElementById('m-nombre').value.trim();
+    const telefono = document.getElementById('m-telefono').value.trim().replace(/\s/g, '');
+    const pedido = document.getElementById('m-pedido').value.trim();
+    const direccion = document.getElementById('m-direccion').value.trim();
+    const horario = document.getElementById('m-horario').value.trim();
+    const notas = document.getElementById('m-notas').value.trim();
+    const editId = document.getElementById('m-edit-id').value;
+
+    if (!nombre || !pedido) {
+      showToast('Pon al menos nombre y pedido');
+      return;
+    }
+
+    if (editId) {
+      const c = clients.find(x => x.id === editId);
+      Object.assign(c, { nombre, telefono, pedido, direccion, horario, notas });
+      showToast(`${nombre.split(' ')[0]} actualizado ✓`);
+    } else {
+      const id = Date.now().toString();
+      clients.push({ id, nombre, telefono, pedido, direccion, horario, notas });
+      clientStatus[id] = 'pending';
+      showToast(`${nombre.split(' ')[0]} añadido ✓`);
+    }
+
+    saveData();
+    render();
+    closeModal();
+  }
+
+  function editClient(id) { openModal(id); }
+
+  function deleteClient(id) {
+    const c = clients.find(x => x.id === id);
+    if (confirm(`¿Quitar a ${c.nombre} de la lista?`)) {
+      clients = clients.filter(x => x.id !== id);
+      delete clientStatus[id];
+      saveData();
+      render();
+      showToast(`${c.nombre.split(' ')[0]} eliminado`);
+    }
+  }
+
+  // ============================================
+  // REPARTO
+  // ============================================
+  function editReparto() {
+    document.getElementById('r-fecha').value = repartoDate;
+    document.getElementById('reparto-modal').classList.add('visible');
+  }
+
+  function closeRepartoModal() {
+    document.getElementById('reparto-modal').classList.remove('visible');
+  }
+
+  function saveReparto() {
+    const fecha = document.getElementById('r-fecha').value.trim();
+    if (fecha) {
+      repartoDate = fecha;
+      clientStatus = {};
+      clients.forEach(c => clientStatus[c.id] = 'pending');
+      saveData();
+      render();
+      showToast('Nueva ronda. Todos pendientes de avisar.');
+    }
+    closeRepartoModal();
+  }
+
+  // ============================================
+  // BACKUP
+  // ============================================
+  function exportData() {
+    const data = { clients, repartoDate, clientStatus, exported: new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `caja-tere-copia-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Copia guardada 💾');
+  }
+
+  function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (data.clients) {
+          if (confirm(`Esto sustituirá tus datos actuales por la copia del ${data.exported ? data.exported.slice(0,10) : 'archivo'}. ¿Continuar?`)) {
+            clients = data.clients;
+            repartoDate = data.repartoDate || repartoDate;
+            clientStatus = data.clientStatus || {};
+            saveData();
+            render();
+            showToast('Copia recuperada ✓');
+          }
+        }
+      } catch(err) {
+        showToast('Error al leer el archivo');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  // ============================================
+  // UTILS
+  // ============================================
+  function formatPhone(phone) {
+    if (!phone) return '';
+    const p = phone.replace(/^34/, '');
+    if (p.length === 9) return p.slice(0,3) + ' ' + p.slice(3,6) + ' ' + p.slice(6);
+    return p;
+  }
+
+  function filterClients(q) { render(q); }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('visible');
+    setTimeout(() => t.classList.remove('visible'), 2500);
+  }
+
+  // ============================================
+  // DEMO DATA
+  // ============================================
+  function loadDemoData() {
+    if (clients.length === 0) {
+      clients = [
+        { id:'1', nombre:'Sara García', telefono:'34600111222', pedido:'2 yogures de litro, 1 rulito de cabra y 1 queso fresco', horario:'Antes de las 8:30', direccion:'C/ Don Ramiro 22, 3ºB, Zamora', notas:'Su hijo Gonzalo le hizo un diploma a Teresa. Siempre paga en efectivo.' },
+        { id:'2', nombre:'Pablo Martínez', telefono:'34600333444', pedido:'2 yogures de litro, 2 cuajadas grandes y 1 cuarto de encetao', horario:'', direccion:'Av. Requejo 15, 2ºA, Zamora', notas:'Cliente desde 2021. Dice "lo de siempre". Le gusta el encetao bien curado.' },
+        { id:'3', nombre:'Yolanda Pérez', telefono:'34600555666', pedido:'1 pack familiar', horario:'Por la tarde', direccion:'Corraleja del Vino', notas:'No usa redes sociales. Solo WhatsApp.' }
+      ];
+      clients.forEach(c => clientStatus[c.id] = 'pending');
+      saveData();
+    }
+  }
+
+  // ============================================
+  // INIT
+  // ============================================
+  loadData();
+  loadDemoData();
+  render();
+</script>
+
+</body>
+</html>
